@@ -1,6 +1,7 @@
 // Get the grid element
 const grid = document.getElementById("grid");
 var globalColor = "";
+var event= new Event("");
 
 function addRow() {
   getSelectedColor();
@@ -15,13 +16,26 @@ function addRow() {
   for (let i = 0; i < numColumns; i++) {
     const newCell = document.createElement("span");
     newCell.classList.add("cell");
+    newCell.value=globalColor;
     newCell.innerText = "Cell";
     newCell.style.background = globalColor;
-    newCell.addEventListener('click', (event) => {
-      const cells = event.target;
-      getSelectedColor();
-      cells.style.background = globalColor;
-    });
+
+    // newCell.addEventListener('click', (event) => {
+    //   const cells = event.target;
+    //   getSelectedColor();
+    //   cells.style.background = globalColor;
+    // });
+    newCell.addEventListener("mousedown",(event)=>{
+      // const cells = event.target;
+      // getSelectedColor();
+      // cells.style.background = globalColor;
+    })
+    // cell.addEventListener("mouseover", (event) => {
+    //   const cells = event.target;
+    //   getSelectedColor();
+    //   cells.style.background = globalColor;
+    // });
+    
     newRow.appendChild(newCell);
   }
 
@@ -37,14 +51,30 @@ function addColumn() {
   // Create a new cell for each row
   rows.forEach((row) => {
     const newCell = document.createElement("span");
+    newCell.value=globalColor;
     newCell.classList.add("cell");
     newCell.innerText = "Cell";
     newCell.style.background = globalColor;
+
     newCell.addEventListener("click", (event) => {
       const cells = event.target;
       getSelectedColor();
       cells.style.background = globalColor;
     });
+
+    newCell.addEventListener("onmousedown",(event)=>{
+      const cells = event.target;
+      getSelectedColor();
+      cells.style.background = globalColor;
+    })
+
+
+    newCell.addEventListener("mouseover", (event) => {
+      const cells = event.target;
+      getSelectedColor();
+      cells.style.background = globalColor;
+    });
+
     row.appendChild(newCell);
   });
 }
@@ -89,4 +119,11 @@ function fillAll(){
 }
 
 // clear all cells/restore all cells to their original/initial color
+function restore(){
+  getSelectedColor();
+  const cells = document.getElementsByClassName("cell");
+  for (let cell of cells) {
+    cell.style.background = cell.value;
+  }
+}
 
